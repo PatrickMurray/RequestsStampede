@@ -1,0 +1,5 @@
+# Ensure requirements.txt is identical to setup.py declaration
+
+schema>=0.7.4
+pyyaml>=5.4.1
+requests>=2.25.1

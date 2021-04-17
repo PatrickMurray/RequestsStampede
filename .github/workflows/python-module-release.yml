@@ -1,0 +1,40 @@
+# This workflow will:
+#
+# 1) Install Python dependencies
+# 2) Examines source code formatting and linting
+# 3) Tun test cases
+#
+# For more information see:
+# https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: RequestsStampede Module Checks
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  release:
+    runs-on: ubuntu-lates
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python Version 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install release dependencies
+        run: |
+          pip install --upgrade pip
+          pip install setuptools wheel twine
+
+      - name: Build and publish
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          python3 setup.py sdist bdist_wheel;
+          twine upload dist/*
