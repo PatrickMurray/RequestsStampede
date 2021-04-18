@@ -7,12 +7,12 @@
 # For more information see:
 # https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: RequestsStampede Module Checks
+name: RequestsStampede PyPI Release
 
 on:
   release:
     types:
-      - created
+      - published
 
 jobs:
   release:
@@ -29,12 +29,15 @@ jobs:
       - name: Install release dependencies
         run: |
           pip install --upgrade pip
-          pip install setuptools wheel twine
+          if [ -f release-requirements.txt ]; then pip install -r release-requirements.txt; fi
 
-      - name: Build and publish
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      - name: Build release
         run: |
           python3 setup.py sdist bdist_wheel;
+      
+      - name: Upload release to PyPI
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
           twine upload dist/*

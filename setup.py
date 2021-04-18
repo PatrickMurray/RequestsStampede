@@ -5,27 +5,29 @@ TODO
 import setuptools
 
 
+VERSION = {
+    "major": 0,
+    "minor": 9,
+    "patch": 0,
+}
+
+
 with open("README.md", "r") as handler:
     long_description = handler.read()
 
 
-dependencies = ["schema>=0.7.4", "pyyaml>=5.4.1", "requests>=2.25.1"]
-
-
 setuptools.setup(
-    name="RequestsStampede-patrickmurray",
-    version="0.9.0",
-    author="Patrick Murray",
-    author_email="patrick@murray.systems",
+    name="RequestsStampede",
+    version="{}.{}.{}".format(
+        VERSION.get("major"), VERSION.get("minor"), VERSION.get("patch")
+    ),
     description="A wrapper around the Requests library that provides request retry logic and backoff delays.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/patrickmurray/RequestsStampede",
-    packages=setuptools.find_packages(),
-    # package_dir={
-    #    'RequestsStampede': 'RequestsStampede'
-    # },
-    install_requires=dependencies,
+    author="Patrick Murray",
+    author_email="patrick@murray.systems",
+    license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
@@ -40,5 +42,7 @@ setuptools.setup(
         "Operating System :: Unix",
         "Operating System :: MacOS",
     ],
+    packages=setuptools.find_packages(),
+    install_requires=["schema>=0.7.4", "pyyaml>=5.4.1", "requests>=2.25.1"],
     python_requires=">=3.7",
 )
