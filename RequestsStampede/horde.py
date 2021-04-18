@@ -152,7 +152,6 @@ class RetryRequest(AbstractRetryRequest):
 
         # Begin attempting requests on the desired resource
         for attempt in attempt_sequence.attempts():
-            print(attempt)
             try:
                 self.logger.debug("Executing request attempt: %r", attempt)
 
